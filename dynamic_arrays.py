@@ -43,6 +43,13 @@ class DynamicArray(object):
         self.__array = self.__array[:index] + [value] + self.__array[index:]
         self.__last_idx_c += 1
 
+    def remove_at(self, index: int):
+        array_new = self.__array[:index]
+        if index < (self.last() - 1):
+            array_new += self.__array[index+1:]
+        self.__array = array_new
+        self.__last_idx_c -= 1
+
     def remove(self, value: Any, occurrence: int = 1):
         idx = None
         freq = 0
@@ -54,11 +61,7 @@ class DynamicArray(object):
                     break
         if not idx:
             raise IndexError(f'Value {value} not found for {occurrence} occurrence(s).')
-        array_new = self.__array[:idx]
-        if idx < (self.len() - 1):
-            array_new += self.__array[idx + 1:]
-        self.__array = array_new
-        self.__last_idx_c -= 1
+        self.remove_at(idx)
 
 
 if __name__ == '__main__':
@@ -96,4 +99,10 @@ if __name__ == '__main__':
     print(arr)
     print(f'appending 11')
     arr.append(11)
+    print(arr)
+    print(f'appending 12')
+    arr.append(12)
+    print(arr)
+    print(f'removing value at index 11')
+    arr.remove_at(11)
     print(arr)
