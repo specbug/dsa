@@ -7,46 +7,24 @@ class DynamicArray(object):
         self.__array = [None] * n
         self.__last_idx_c = 0
 
-    def __repr__(self):
-        return f'{self.__array[:self.__last_idx_c + 1]}'
-
-    def __getitem__(self, index: int) -> Any:
-        return self.__array[index]
-
-    def __setitem__(self, index: int, value: Any):
-        self.__array[index] = value
-        self.__last_idx_c = max(index, self.__last_idx_c)
-
-    def __delitem__(self, index: int):
-        self.remove_at(index)
-
-    def _resize(self):
-        print(f'Resizing array from {self.len()} to {self.len() * 2} elements.')
-        array_new = self.__array + [None] * self.__init_size
-        self.__array = array_new[:]
-        self.__init_size *= 2
-
-    def _is_array_full(self):
-        return self.__array[-1] is not None
-
-    def last(self):
-        return self.__last_idx_c
-
-    def len(self):
-        return self.__init_size
-
     def append(self, value: Any):
-        if self._is_array_full():
-            self._resize()
+        if self.__is_array_full():
+            self.__resize()
         self.__last_idx_c += 1
         self.__setitem__(self.__last_idx_c, value)
 
-    def insert(self, index: int, value: Any):
-        if self._is_array_full():
-            self._resize()
-        array_new = self.__array[:index] + [value] + self.__array[index:]
-        self.__array = array_new[:]
-        self.__last_idx_c += 1
+    def clear(self):
+        self.__array = []
+        self.__last_idx_c = 0
+
+    def copy(self):
+        return self.__array[:]
+
+    def count(self):
+        return self.__init_size
+
+    def extend(self):
+        pass
 
     def index(self, value: Any):
         for i, v in enumerate(self.__array):
@@ -54,9 +32,19 @@ class DynamicArray(object):
                 return i
         raise ValueError(f'{value} is not in array.')
 
+    def insert(self, index: int, value: Any):
+        if self.__is_array_full():
+            self.__resize()
+        array_new = self.__array[:index] + [value] + self.__array[index:]
+        self.__array = array_new[:]
+        self.__last_idx_c += 1
+
+    def pop(self):
+        pass
+
     def remove_at(self, index: int):
         array_new = self.__array[:index]
-        if index < (self.last() - 1):
+        if index < (self.count() - 1):
             array_new += self.__array[index+1:]
         self.__array = array_new[:]
         self.__last_idx_c -= 1
@@ -73,6 +61,37 @@ class DynamicArray(object):
         if not idx:
             raise IndexError(f'Value {value} not found for {occurrence} occurrence(s).')
         self.remove_at(idx)
+
+    def reverse(self):
+        return self.__array[::-1]
+
+    def len(self):
+        return self.__last_idx_c
+
+    def __resize(self):
+        print(f'Resizing array from {self.count()} to {self.count() * 2} elements.')
+        array_new = self.__array + [None] * self.__init_size
+        self.__array = array_new[:]
+        self.__init_size *= 2
+
+    def __is_array_full(self):
+        return self.__array[-1] is not None
+
+    def __len__(self):
+        return self.len()
+
+    def __repr__(self):
+        return f'{self.__array[:self.__last_idx_c + 1]}'
+
+    def __getitem__(self, index: int) -> Any:
+        return self.__array[index]
+
+    def __setitem__(self, index: int, value: Any):
+        self.__array[index] = value
+        self.__last_idx_c = max(index, self.__last_idx_c)
+
+    def __delitem__(self, index: int):
+        self.remove_at(index)
 
 
 if __name__ == '__main__':
@@ -114,12 +133,13 @@ if __name__ == '__main__':
     print(f'appending 12')
     arr.append(12)
     print(arr)
-    print(f'removing value at index 11')
-    arr.remove_at(11)
+    print(f'removing value at index 10')
+    arr.remove_at(10)
     print(arr)
-    print(f'index of 11:', arr.index(11))
-    print(f'index of 12:')
+    print(f'index of 12:', arr.index(12))
+    print(f'index of 11:')
     try:
-        arr.index(12)
+        arr.index(11)
     except ValueError as exc:
         print(repr(exc))
+    print(f'len of array: {len(arr)}')
