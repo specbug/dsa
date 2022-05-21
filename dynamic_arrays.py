@@ -5,7 +5,7 @@ class DynamicArray(object):
     def __init__(self, n: int = 10):
         self.__init_size = n
         self.__array = [None] * n
-        self.__last_idx_c = 0
+        self.__last_idx_c = -1
 
     def append(self, value: Any):
         if self.__is_array_full():
@@ -23,8 +23,12 @@ class DynamicArray(object):
     def count(self):
         return self.__init_size
 
-    def extend(self):
-        pass
+    def extend(self, array: 'DynamicArray'):
+        while len(array) > (self.count() - self.len()):
+            self.__resize()
+        array_new = self.__array[:self.__last_idx_c+1] + [v for v in array]
+        self.__array = array_new[:]
+        self.__last_idx_c += len(array)
 
     def index(self, value: Any):
         for i, v in enumerate(self.__array):
@@ -66,7 +70,7 @@ class DynamicArray(object):
         return self.__array[::-1]
 
     def len(self):
-        return self.__last_idx_c
+        return self.__last_idx_c+1
 
     def __resize(self):
         print(f'Resizing array from {self.count()} to {self.count() * 2} elements.')
@@ -98,10 +102,15 @@ if __name__ == '__main__':
     arr = DynamicArray(n=5)
     arr[0] = 1
     arr[1] = 2
-    arr[2] = 3
-    arr[3] = 4
-    arr[4] = 5
-    print(f'array: {arr}')
+    print(f'init array arr: {arr}')
+    arr2 = DynamicArray(n=3)
+    arr2.append(3)
+    arr2.append(4)
+    arr2.append(5)
+    print(f'init array arr2: {arr2}')
+    print(f'extending array arr by arr2')
+    arr.extend(arr2)
+    print(f'arr: {arr}')
     print('appending 6')
     arr.append(6)
     print(arr)
