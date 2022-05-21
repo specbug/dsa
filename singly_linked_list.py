@@ -23,6 +23,11 @@ class SinglyLinkedList(object):
 
     def append(self, value: Any):
         new_node = Node(value, None)
+        if self.tail:
+            tail = self.tail
+            self.tail = new_node
+            tail.next = self.tail
+            return
         this = self.head
         if this is None:
             self.head = new_node
