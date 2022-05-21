@@ -17,9 +17,13 @@ class DynamicArray(object):
         self.__array[index] = value
         self.__last_idx_c = max(index, self.__last_idx_c)
 
+    def __delitem__(self, index: int):
+        self.remove_at(index)
+
     def _resize(self):
         print(f'Resizing array from {self.len()} to {self.len() * 2} elements.')
-        self.__array += [None] * self.__init_size
+        array_new = self.__array + [None] * self.__init_size
+        self.__array = array_new[:]
         self.__init_size *= 2
 
     def _is_array_full(self):
@@ -40,14 +44,21 @@ class DynamicArray(object):
     def insert(self, index: int, value: Any):
         if self._is_array_full():
             self._resize()
-        self.__array = self.__array[:index] + [value] + self.__array[index:]
+        array_new = self.__array[:index] + [value] + self.__array[index:]
+        self.__array = array_new[:]
         self.__last_idx_c += 1
+
+    def index(self, value: Any):
+        for i, v in enumerate(self.__array):
+            if v == value:
+                return i
+        raise ValueError(f'{value} is not in array.')
 
     def remove_at(self, index: int):
         array_new = self.__array[:index]
         if index < (self.last() - 1):
             array_new += self.__array[index+1:]
-        self.__array = array_new
+        self.__array = array_new[:]
         self.__last_idx_c -= 1
 
     def remove(self, value: Any, occurrence: int = 1):
@@ -106,3 +117,9 @@ if __name__ == '__main__':
     print(f'removing value at index 11')
     arr.remove_at(11)
     print(arr)
+    print(f'index of 11:', arr.index(11))
+    print(f'index of 12:')
+    try:
+        arr.index(12)
+    except ValueError as exc:
+        print(repr(exc))
