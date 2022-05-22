@@ -13,7 +13,7 @@ class LinkedList(object):
         self.tail = None
         self.__last_idx_c = -1
 
-    def __str__(self):
+    def __repr__(self):
         _repr = ''
         this = self.head
         while this:
