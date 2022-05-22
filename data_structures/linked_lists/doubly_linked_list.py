@@ -14,13 +14,19 @@ class LinkedList(object):
         self.tail = None
         self.__last_idx_c = -1
 
-    def __str__(self):
+    def __repr__(self):
         _repr = ''
         this = self.head
         while this:
             _repr += f'{this.value} <-> '
             this = this.next
         return _repr.rstrip(' <-> ')
+
+    def peek_first(self):
+        return self.head.value
+
+    def peek_last(self):
+        return self.tail.value
 
     def insert_at_beginning(self, value: Any):
         head = Node(value, None, None)
@@ -68,8 +74,9 @@ class LinkedList(object):
             this = this.next
 
     def remove_from_beginning(self):
-        self.head = self.head.next
-        self.head.prev = None
+        if self.head.next:
+            self.head = self.head.next
+            self.head.prev = None
 
     def remove_from_end(self):
         self.tail = self.tail.prev
