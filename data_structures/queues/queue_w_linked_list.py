@@ -10,6 +10,9 @@ class Queue(object):
     def __repr__(self):
         return self.__queue.__repr__().replace('<->', '->')
 
+    def __contains__(self, value: Any):
+        return self.contains(value)
+
     def enqueue(self, value: Any):
         self.__queue.insert_at_end(value)
         self.__ptop += 1
@@ -29,6 +32,9 @@ class Queue(object):
 
     def empty(self):
         return self.size() == 0
+
+    def contains(self, value: Any):
+        return self.__queue.contains(value)
 
 
 if __name__ == '__main__':
@@ -50,6 +56,7 @@ if __name__ == '__main__':
     print('enqueuing 7')
     q.enqueue(7)
     print(q)
+    print('11 in queue?', 11 in q)
     print('emptying queue...')
     while q.size() > 0:
         print('dequeue:', q.dequeue())
