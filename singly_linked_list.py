@@ -58,7 +58,7 @@ class SinglyLinkedList(object):
             if this == before:
                 new_node.next = this
                 prev.next = new_node
-                break
+                return
 
     def remove_from_beginning(self):
         self.head = self.head.next
@@ -73,15 +73,19 @@ class SinglyLinkedList(object):
         self.tail.next = None
 
     def remove(self, value: Any):
-        prev = this = self.head
+        prev = None
+        this = self.head
         while this.next:
-            this = this.next
             if value == this.value:
+                if not prev:
+                    self.remove_from_beginning()
+                    return
                 prev.next = this.next
                 if this == self.tail:
                     self.tail = prev
                 break
             prev = this
+            this = this.next
 
 
 if __name__ == '__main__':
