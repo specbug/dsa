@@ -35,30 +35,31 @@ class SinglyLinkedList(object):
         this.next = new_node
         self.tail = new_node
 
-    def insert_after(self, value: Any, after: 'Node'):
-        new_node = Node(value, after.next)
+    def insert_after(self, value: Any, after: Any):
+        new_node = Node(value, None)
         this = self.head
         while this.next:
-            if this == after:
+            if this.value == after:
                 new_node.next = this.next
                 this.next = new_node
                 return
             this = this.next
         self.insert_at_end(value)
 
-    def insert_before(self, value: Any, before: 'Node'):
-        if before == self.head:
-            self.insert_at_beginning(value)
-            return
+    def insert_before(self, value: Any, before: Any):
         new_node = Node(value, None)
+        prev = None
         this = self.head
         while this.next:
-            prev = this
-            this = this.next
-            if this == before:
+            if this.value == before:
+                if not prev:
+                    self.insert_at_beginning(value)
+                    return
                 new_node.next = this
                 prev.next = new_node
                 return
+            prev = this
+            this = this.next
 
     def remove_from_beginning(self):
         self.head = self.head.next
@@ -75,7 +76,7 @@ class SinglyLinkedList(object):
     def remove(self, value: Any):
         prev = None
         this = self.head
-        while this.next:
+        while this:
             if value == this.value:
                 if not prev:
                     self.remove_from_beginning()
@@ -83,7 +84,7 @@ class SinglyLinkedList(object):
                 prev.next = this.next
                 if this == self.tail:
                     self.tail = prev
-                break
+                return
             prev = this
             this = this.next
 
@@ -108,6 +109,12 @@ if __name__ == '__main__':
     print('removing 6')
     sll.remove(6)
     print(sll)
+    print('inserting 8 after 4')
+    sll.insert_after(8, 4)
+    print(sll)
+    print('inserting 8 before 4')
+    sll.insert_before(8, 4)
+    print(sll)
     print('removing 5 from end')
     sll.remove_from_end()
     print(sll)
@@ -122,6 +129,10 @@ if __name__ == '__main__':
     print(sll)
     print('removing 1 from beginning')
     sll.remove_from_beginning()
+    print(sll)
+    print('removing two 8s')
+    sll.remove(8)
+    sll.remove(8)
     print(sll)
     print(f'head: {sll.head.value}')
     print(f'tail: {sll.tail.value}')
