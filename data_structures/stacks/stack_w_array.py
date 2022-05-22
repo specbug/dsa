@@ -1,10 +1,10 @@
 from typing import Any
-from data_structures.arrays.dynamic_arrays import DynamicArray
+from data_structures.arrays.dynamic_arrays import Array
 
 
 class Stack(object):
     def __init__(self):
-        self.__stack = DynamicArray()
+        self.__stack = Array()
         self.__ptop = -1
 
     def __repr__(self):

@@ -1,7 +1,7 @@
 from typing import Any
 
 
-class DynamicArray(object):
+class Array(object):
     def __init__(self, n: int = 10):
         self.__init_size = n
         self.__array = [None] * n
@@ -23,7 +23,7 @@ class DynamicArray(object):
     def count(self):
         return self.__init_size
 
-    def extend(self, array: 'DynamicArray'):
+    def extend(self, array: 'Array'):
         while len(array) > (self.count() - self.len()):
             self.__resize()
         array_new = self.__array[:self.__last_idx_c+1] + [v for v in array]
@@ -102,11 +102,11 @@ class DynamicArray(object):
 
 
 if __name__ == '__main__':
-    arr = DynamicArray(n=5)
+    arr = Array(n=5)
     arr[0] = 1
     arr[1] = 2
     print(f'init array arr: {arr}')
-    arr2 = DynamicArray(n=3)
+    arr2 = Array(n=3)
     arr2.append(3)
     arr2.append(4)
     arr2.append(5)
