@@ -21,22 +21,6 @@ class SinglyLinkedList(object):
             this = this.next
         return _repr.rstrip(' -> ')
 
-    def append(self, value: Any):
-        new_node = Node(value, None)
-        if self.tail:
-            tail = self.tail
-            self.tail = new_node
-            tail.next = self.tail
-            return
-        this = self.head
-        if this is None:
-            self.head = new_node
-            return
-        while this.next:
-            this = this.next
-        this.next = new_node
-        self.tail = new_node
-
     def insert_at_beginning(self, value: Any):
         head = Node(value, None)
         if self.head:
@@ -44,37 +28,37 @@ class SinglyLinkedList(object):
         self.head = head
 
     def insert_at_end(self, value: Any):
-        self.insert_after(value, self.tail)
+        new_node = Node(value, None)
+        this = self.head
+        while this.next:
+            this = this.next
+        this.next = new_node
+        self.tail = new_node
 
     def insert_after(self, value: Any, after: 'Node'):
-        tail = None
         new_node = Node(value, after.next)
-        if after == self.tail:
-            tail = new_node
-        after.next = new_node
-        self.tail = tail or self.tail
+        this = self.head
+        while this.next:
+            if this == after:
+                new_node.next = this.next
+                this.next = new_node
+                return
+            this = this.next
+        self.insert_at_end(value)
 
     def insert_before(self, value: Any, before: 'Node'):
         if before == self.head:
             self.insert_at_beginning(value)
-        else:
-            this = self.head
-            new_node = Node(value, None)
-            while this.next:
-                prev = this
-                this = this.next
-                if this == before:
-                    new_node.next = this
-                    prev.next = new_node
-                    break
-
-    def insert(self, value: Any, after: 'Node' = None, before: 'Node' = None):
-        if not (after or before):
-            self.insert_at_beginning(value)
-        elif not after:
-            self.insert_after(value, after)
-        else:
-            self.insert_before(value, before)
+            return
+        new_node = Node(value, None)
+        this = self.head
+        while this.next:
+            prev = this
+            this = this.next
+            if this == before:
+                new_node.next = this
+                prev.next = new_node
+                break
 
     def remove(self, value: Any):
         prev = this = self.head
@@ -90,17 +74,17 @@ class SinglyLinkedList(object):
 
 if __name__ == '__main__':
     sll = SinglyLinkedList()
-    sll.append(1)
-    sll.append(2)
-    sll.append(3)
-    sll.append(4)
-    sll.append(5)
+    sll.insert_at_beginning(1)
+    sll.insert_at_end(2)
+    sll.insert_at_end(3)
+    sll.insert_at_end(4)
+    sll.insert_at_end(5)
     print(sll)
     print('inserting 0 at beginning')
-    sll.insert(0)
+    sll.insert_at_beginning(0)
     print(sll)
     print('inserting 6 at end')
-    sll.append(6)
+    sll.insert_at_end(6)
     print(sll)
     print('removing 3')
     sll.remove(3)
@@ -111,7 +95,7 @@ if __name__ == '__main__':
     print('removing 5')
     sll.remove(5)
     print(sll)
-    print('appending 8')
+    print('inserting 8 at end')
     sll.insert_at_end(8)
     print(sll)
     print('insert 1 at beginning')
