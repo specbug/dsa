@@ -60,6 +60,18 @@ class SinglyLinkedList(object):
                 prev.next = new_node
                 break
 
+    def remove_from_beginning(self):
+        self.head = self.head.next
+
+    def remove_from_end(self):
+        prev = None
+        this = self.head
+        while this.next:
+            prev = this
+            this = this.next
+        self.tail = prev
+        self.tail.next = None
+
     def remove(self, value: Any):
         prev = this = self.head
         while this.next:
@@ -92,8 +104,8 @@ if __name__ == '__main__':
     print('removing 6')
     sll.remove(6)
     print(sll)
-    print('removing 5')
-    sll.remove(5)
+    print('removing 5 from end')
+    sll.remove_from_end()
     print(sll)
     print('inserting 8 at end')
     sll.insert_at_end(8)
@@ -101,9 +113,11 @@ if __name__ == '__main__':
     print('insert 1 at beginning')
     sll.insert_at_beginning(1)
     print(sll)
-    print('delete 0 & 1')
+    print('delete 0')
     sll.remove(0)
-    sll.remove(1)
+    print(sll)
+    print('removing 1 from beginning')
+    sll.remove_from_beginning()
     print(sll)
     print(f'head: {sll.head.value}')
     print(f'tail: {sll.tail.value}')
