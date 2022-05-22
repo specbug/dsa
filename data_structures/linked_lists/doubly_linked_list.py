@@ -97,6 +97,14 @@ class LinkedList(object):
                 return
             this = this.next
 
+    def contains(self, value: Any) -> bool:
+        this = self.head
+        while this:
+            if value == this.value:
+                return True
+            this = this.next
+        return False
+
 
 if __name__ == '__main__':
     dll = LinkedList()
