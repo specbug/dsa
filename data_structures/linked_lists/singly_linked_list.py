@@ -21,6 +21,12 @@ class LinkedList(object):
             this = this.next
         return _repr.rstrip(' -> ')
 
+    def peek_first(self):
+        return self.head.value
+
+    def peek_last(self):
+        return self.tail.value
+
     def insert_at_beginning(self, value: Any):
         head = Node(value, None)
         if self.head:
