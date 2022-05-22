@@ -7,7 +7,7 @@ class Node(object):
         self.next = successor
 
 
-class SinglyLinkedList(object):
+class LinkedList(object):
     def __init__(self):
         self.head = None
         self.tail = None
@@ -90,7 +90,7 @@ class SinglyLinkedList(object):
 
 
 if __name__ == '__main__':
-    sll = SinglyLinkedList()
+    sll = LinkedList()
     sll.insert_at_beginning(1)
     sll.insert_at_end(2)
     sll.insert_at_end(3)

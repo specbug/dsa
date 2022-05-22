@@ -8,7 +8,7 @@ class Node(object):
         self.next = successor
 
 
-class DoublyLinkedList(object):
+class LinkedList(object):
     def __init__(self):
         self.head = None
         self.tail = None
@@ -92,7 +92,7 @@ class DoublyLinkedList(object):
 
 
 if __name__ == '__main__':
-    dll = DoublyLinkedList()
+    dll = LinkedList()
     dll.insert_at_beginning(1)
     dll.insert_at_end(2)
     dll.insert_at_end(3)
