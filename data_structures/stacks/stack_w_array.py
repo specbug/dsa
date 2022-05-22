@@ -8,8 +8,8 @@ class Stack(object):
         self.__ptop = -1
 
     def __repr__(self):
-        _repr = self.__stack.__repr__()
-        return _repr.replace(', ', ' -> ').strip('[').strip(']')
+        _repr = self.__stack.__repr__().strip('[').strip(']')
+        return ' -> '.join(_repr.split(', ')[::-1])
 
     def push(self, value: Any):
         self.__stack.append(value)
