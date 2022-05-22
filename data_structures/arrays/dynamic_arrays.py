@@ -45,7 +45,7 @@ class DynamicArray(object):
 
     def pop(self):
         last_val = self.__array[-1]
-        self.__array = self.__array[:-1]
+        del self.__array[-1]
         return last_val
 
     def remove_at(self, index: int):
