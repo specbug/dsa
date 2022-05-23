@@ -7,6 +7,13 @@ class Array(object):
         self.__array = [None] * n
         self.__last_idx_c = -1
 
+    @classmethod
+    def array(cls, lst: list):
+        _array = cls(len(lst))
+        for i in lst:
+            _array.append(i)
+        return _array
+
     def append(self, value: Any):
         if self.__is_array_full():
             self.__resize()
