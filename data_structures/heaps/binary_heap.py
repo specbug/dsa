@@ -10,6 +10,10 @@ class BinaryHeap(object):
     def __repr__(self):
         return self.display()
 
+    @property
+    def heap(self):
+        return self._heap
+
     def push(self, value: Any):
         self._heap.append(value)
         self._size += 1
