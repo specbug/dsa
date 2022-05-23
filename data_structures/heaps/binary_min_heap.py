@@ -17,13 +17,13 @@ class MinBinaryHeap(BinaryHeap):
             return
         lft = self._heap[self._left_child(pos)]
         rgt = self._heap[self._right_child(pos)]
-        while rgt and lft and (curr > lft or curr > rgt):
-            if curr > rgt:
-                self._swap(pos, self._right_child(pos))
-                pos = self._right_child(pos)
-            else:
+        while (rgt or lft) and (curr > lft if lft else False or curr > rgt if rgt else False):
+            if lft and curr >= lft:
                 self._swap(pos, self._left_child(pos))
                 pos = self._left_child(pos)
+            else:
+                self._swap(pos, self._right_child(pos))
+                pos = self._right_child(pos)
             if (2 * pos + 1) > self.size():
                 return
             curr = self._heap[pos]
