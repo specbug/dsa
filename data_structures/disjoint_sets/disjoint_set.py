@@ -53,5 +53,3 @@ if __name__ == '__main__':
     print(f'c and e are in the same set: {dset.find("c") == dset.find("e")}')
     print(f'f and h are in the same set: {dset.find("f") == dset.find("h")}')
     print(f'a and j are in the same set: {dset.find("a") == dset.find("j")}')
-
-
