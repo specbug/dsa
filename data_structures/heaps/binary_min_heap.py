@@ -1,4 +1,3 @@
-from typing import Any
 from data_structures.heaps.binary_heap import BinaryHeap
 
 
